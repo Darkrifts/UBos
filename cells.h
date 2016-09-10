@@ -5,7 +5,7 @@
 
 static uint32_t freeMemCells = 32;
 static uint32_t totalMemCells = 32;
-static uint8_t memcells[][256] = {
+static int8_t memcells[][256] = {
 	{
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -28,7 +28,7 @@ static uint8_t memcells[][256] = {
 };
 
 // Gives a handle to a memory cell
-static uint8_t* grabCell()
+static int8_t* grabCell()
 {
 	for(uint32_t i = 0; i < totalMemCells; i++)
 	{
@@ -44,7 +44,7 @@ static uint8_t* grabCell()
 
 // Given a handle to a cell, it clears it and determines it as free
 // Does not invalidate handle, so corruption can occur, but meh
-static void freeCell(uint8_t* cell)
+static void freeCell(int8_t* cell)
 {
 	if((cell[0] & 1) != 0)
 	{
