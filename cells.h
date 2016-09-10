@@ -1,3 +1,5 @@
+// Holds 4 KiB at maximum capacity
+
 #ifndef CELLS_H
 #define CELLS_H
 
