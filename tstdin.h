@@ -2,6 +2,7 @@
 #define TSTDIN_H
 
 #include "tstdout.h"
+#include "stdutil.h"
 
 static const char* scancodes1 = "  1234567890-=\b\tQWERTYUIOP[]\n\0ASDFGHJKL;'`\0\\ZXCVBNM,./\0*\0 \0\0\0\0\0\0\0\0\0\0\0\0\0789-456+1230.\0\0";
 
@@ -38,86 +39,18 @@ static char getKybInput2()
 	return scancodes2[g];
 }
 
-static char getChar1(bool echo = false)
+static void getString1(char* storage, bool echo)
 {
 	char c = 0;
+	size_t i = 0;
 	do {
-		c = getKybInput1();
-	} while(c != 0);
+	c = getKybInput1();
+	kwait(60000000);
+	if(c == '\0' || c == 0) continue;
+	storage[i] = c;
+	i++;
 	if(echo) terminal_putchar(c);
-	return c;
-}
-
-static char getChar2(bool echo = false)
-{
-	char c = 0;
-	do {
-		c = getKybInput2();
-	} while(c != 0);
-	if(echo) terminal_putchar(c);
-	return c;
-}
-
-static void getString(int8_t charset, char* data, bool echo = false)
-{
-	size_t len = strlen(data);
-	if(charset == 1)
-	{
-		for(uint32_t i = 0; i < len; i++)
-		{
-			data[i] = getChar1(echo);
-			if(data[i] == '\n')
-			{
-				for(uint32_t j = i + 1; j < len; j++)
-					data[j] = 0;
-				return;
-			}
-		}
-	}
-	if(charset == 2)
-	{
-		for(uint32_t i = 0; i < len; i++)
-		{
-			data[i] = getChar2(echo);
-			if(data[i] == '\n')
-			{
-				for(uint32_t j = i + 1; j < len; j++)
-					data[j] = 0;
-				return;
-			}
-		}
-	}
-}
-
-static void getString(int8_t charset, unsigned char* data, bool echo = false)
-{
-	size_t len = strlen(data);
-	if(charset == 1)
-	{
-		for(uint32_t i = 0; i < len; i++)
-		{
-			data[i] = getChar1(echo);
-			if(data[i] == '\n')
-			{
-				for(uint32_t j = i + 1; j < len; j++)
-					data[j] = 0;
-				return;
-			}
-		}
-	}
-	if(charset == 2)
-	{
-		for(uint32_t i = 0; i < len; i++)
-		{
-			data[i] = getChar2(echo);
-			if(data[i] == '\n')
-			{
-				for(uint32_t j = i + 1; j < len; j++)
-					data[j] = 0;
-				return;
-			}
-		}
-	}
+	} while(c != '\n' && i < 256);
 }
 
 #endif
