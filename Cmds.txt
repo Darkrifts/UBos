@@ -1,0 +1,4 @@
+kernel.cpp - i686-elf-g++ -c kernel.cpp -o kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+boot.asm - nasm -felf32 boot.asm -o boot.o
+linker.ld - i686-elf-gcc -T linker.ld -o myos.bin -ffreestanding -O2 -nostdlib <files here> -lgcc
+myos.bin (test) - qemu-system-i386 -kernel myos.bin
