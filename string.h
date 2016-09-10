@@ -72,13 +72,6 @@ size_t strlen(char* str) {
 	return len;
 }
 
-size_t strlen(unsigned char* str) {
-	size_t len = 0;
-	while (str[len])
-		len++;
-	return len;
-}
-
 static void str_toUpper(char* str)
 {
 	int len = strlen(str);
