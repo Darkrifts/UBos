@@ -4,14 +4,9 @@
 #include "tstdin.h"
 #include "string.h"
 #include "cells.h"
-
-static void kwait(uint64_t ticks)
-{
-	for(uint64_t i = 0ul; i < ticks; i++) {asm("nop");}
-}
+#include "stdutils.h"
 
 extern "C"
 void kernel_main(void) {
 	terminal_initialize();
-	/* TODO: ADD STUFF WHEN IO AND MEMORY ACTUALLY WORKS */
 }
