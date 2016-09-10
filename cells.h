@@ -1,5 +1,5 @@
-#ifndef BADMEM_H
-#define BADMEM_H
+#ifndef CELLS_H
+#define CELLS_H
 
 static uint32_t freeMemCells = 3;
 static uint32_t totalMemCells = 3;
@@ -61,7 +61,7 @@ static uint8_t memcells[][256] = {
 };
 
 // Gives a handle to a memory cell
-uint8_t* malloc()
+uint8_t* grabCell()
 {
 	if(freeMemCells == 0) while(1){}
 	for(uint32_t i = 0; i < totalMemCells; i++)
@@ -79,7 +79,7 @@ uint8_t* malloc()
 // Given a handle to a cell, it clears it and determines it as free
 // Does not invalidate handle, so corruption can occur, but meh
 // Why would anyone "free" memory and use it still anyway?
-void free(uint8_t* cell)
+void freeCell(uint8_t* cell)
 {
 	if((cell[0] & 1) != 0)
 	{
