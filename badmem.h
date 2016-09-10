@@ -78,6 +78,7 @@ uint8_t* malloc()
 
 // Given a handle to a cell, it clears it and determines it as free
 // Does not invalidate handle, so corruption can occur, but meh
+// Why would anyone "free" memory and use it still anyway?
 void free(uint8_t* cell)
 {
 	if((cell[0] & 1) != 0)
