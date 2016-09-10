@@ -63,19 +63,16 @@ void terminal_putentry(char c, uint8_t color, size_t x, size_t y) {
  
 void terminal_putchar(char c) {
 	if(c == 0) return;
-	terminal_putentry(c, terminal_color, terminal_column, terminal_row);
-	if (++terminal_column == VGA_WIDTH) {
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
-	}
 	if(c == '\n') { 
-		terminal_column = -1;
+		terminal_column = 0;
 		terminal_row++;
+		return;
 	}
 	if(c == '\b') { 
+		if(terminal_column < 1) return;
 		terminal_column--;
-		 terminal_putentry(' ', 15, terminal_column, terminal_row); 
+		terminal_putentry(' ', 15, terminal_column, terminal_row);
+		return;
 	}
 	if(c == '\t') { 
 		terminal_column += 5; 
@@ -83,16 +80,40 @@ void terminal_putchar(char c) {
 			terminal_column = 0;
 			if(++terminal_row == VGA_HEIGHT) terminal_row = 0;
 		}
+		return;
+	}
+	terminal_putentry(c, terminal_color, terminal_column, terminal_row);
+	if (++terminal_column == VGA_WIDTH) {
+		terminal_column = 0;
+		if (++terminal_row == VGA_HEIGHT)
+			terminal_row = 0;
 	}
 }
- 
-void terminal_write(const char* data, size_t size) {
-	for (size_t i = 0; i < size; i++)
+
+void terminal_write(char* data) {
+	size_t len = strlen(data);
+	for (size_t i = 0; i < len; i++)
 		terminal_putchar(data[i]);
 }
  
-void terminal_writestring(const char* data) {
-	terminal_write(data, strlen(data));
+void terminal_write(const char* data) {
+	size_t len = strlen(data);
+	for (size_t i = 0; i < len; i++)
+		terminal_putchar(data[i]);
+}
+
+void printf(uint8_t color, char* str)
+{
+	terminal_setcolor(color);
+	size_t len = strlen(str);
+	for(size_t i = 0; i < len; i++) terminal_putchar(str[i]);
+}
+
+void printf(uint8_t color, const char* str)
+{
+	terminal_setcolor(color);
+	size_t len = strlen(str);
+	for(size_t i = 0; i < len; i++) terminal_putchar(str[i]);
 }
 
 static void cls()		
