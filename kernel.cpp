@@ -3,7 +3,7 @@
 #include "tstdout.h"
 #include "tstdin.h"
 #include "string.h"
-#include "badmem.h"
+#include "cells.h"
 
 static void kwait(uint64_t ticks)
 {
